@@ -1,0 +1,939 @@
+{
+    "variable":  [
+                     {
+                         "key":  "token",
+                         "type":  "string",
+                         "description":  "JWT token from login response",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "vehicleId",
+                         "type":  "string",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "lotId",
+                         "type":  "string",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "sessionId",
+                         "type":  "string",
+                         "value":  "1"
+                     }
+                 ],
+    "info":  {
+                 "description":  "Complete test suite with 33 endpoints covering authentication, vehicles, parking lots, parking sessions, and error scenarios",
+                 "name":  "SmartPark API - Comprehensive Tests",
+                 "schema":  "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+             },
+    "item":  [
+                 {
+                     "description":  "Login and token management tests",
+                     "name":  "1. Authentication Tests",
+                     "item":  [
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/auth/login",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "login"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"username\":\"admin\",\"password\":\"SmartPark123!\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Login - Valid Credentials",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/auth/login",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "auth",
+                                                                               "login"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"username\":\"wronguser\",\"password\":\"SmartPark123!\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Login - Invalid Username",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/auth/login",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "auth",
+                                                                               "login"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"username\":\"admin\",\"password\":\"WrongPassword\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Login - Invalid Password",
+                                      "response":  [
+
+                                                   ]
+                                  }
+                              ]
+                 },
+                 {
+                     "description":  "Vehicle registration and listing tests",
+                     "name":  "2. Vehicle Tests",
+                     "item":  [
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/vehicles",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicles"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"licensePlate\":\"ABC-1234\",\"type\":\"CAR\",\"ownerName\":\"John Doe\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Register Vehicle - Car (ABC-1234)",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/vehicles",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicles"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"licensePlate\":\"MOTO-001\",\"type\":\"MOTORCYCLE\",\"ownerName\":\"Jane Smith\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Register Vehicle - Motorcycle (MOTO-001)",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/vehicles",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicles"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"licensePlate\":\"TRK-2025\",\"type\":\"TRUCK\",\"ownerName\":\"Bob Johnson\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Register Vehicle - Truck (TRK-2025)",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/vehicles",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicles"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Get All Vehicles",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/vehicles/ABC-1234",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicles",
+                                                                               "ABC-1234"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Get Vehicle by ID",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/vehicles",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicles"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"licensePlate\":\"ABC-1234\",\"type\":\"CAR\",\"ownerName\":\"Duplicate Test\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Register Vehicle - Duplicate (Should Fail)",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/vehicles",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicles"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"licensePlate\":\"INVALID-1\",\"type\":\"INVALID_TYPE\",\"ownerName\":\"Test User\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Register Vehicle - Invalid Type (Should Fail)",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/vehicles",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicles"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"licensePlate\":\"NOAUTH-1\",\"type\":\"CAR\",\"ownerName\":\"No Auth Test\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Register Vehicle - Missing Token (Should Fail)",
+                                      "response":  [
+
+                                                   ]
+                                  }
+                              ]
+                 },
+                 {
+                     "description":  "Parking lot creation and listing tests",
+                     "name":  "3. Parking Lot Tests",
+                     "item":  [
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/lots",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "lots"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"capacity\":50,\"location\":\"123 Main St - Building A\",\"lotId\":\"BUILDING-A\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Create Parking Lot - Building A",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/lots",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "lots"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"capacity\":30,\"location\":\"456 Oak Ave - Building B\",\"lotId\":\"BUILDING-B\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Create Parking Lot - Building B",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/lots",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "lots"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Get All Parking Lots",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/lots/1",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "lots",
+                                                                               "1"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Get Parking Lot by ID",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/lots/1/occupancy",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "lots",
+                                                                               "1",
+                                                                               "occupancy"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Get Lot Occupancy",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/lots",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "lots"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"capacity\":100,\"location\":\"Another location\",\"lotId\":\"BUILDING-A\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Create Parking Lot - Duplicate Name (Should Fail)",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/lots",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "lots"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"capacity\":\"-10\",\"location\":\"Building C Location\",\"lotId\":\"BUILDING-C\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Create Parking Lot - Invalid Slots (Should Fail)",
+                                      "response":  [
+
+                                                   ]
+                                  }
+                              ]
+                 },
+                 {
+                     "description":  "Check-in, check-out, and fee calculation tests for all vehicle types",
+                     "name":  "4. Parking Session Tests",
+                     "item":  [
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/lots/BUILDING-A/check-in",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "lots",
+                                                                               "BUILDING-A",
+                                                                               "check-in"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"licensePlate\":\"ABC-1234\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Check-In Car (ABC-1234) - Building A",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/lots/BUILDING-A/check-in",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "lots",
+                                                                               "BUILDING-A",
+                                                                               "check-in"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"licensePlate\":\"MOTO-001\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Check-In Motorcycle (MOTO-001) - Building A",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/lots/BUILDING-B/check-in",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "lots",
+                                                                               "BUILDING-B",
+                                                                               "check-in"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"licensePlate\":\"TRK-2025\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Check-In Truck (TRK-2025) - Building B",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/lots/BUILDING-A/check-out",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "lots",
+                                                                               "BUILDING-A",
+                                                                               "check-out"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"licensePlate\":\"ABC-1234\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Check-Out Car (ABC-1234) - Base Fee (0-3 hours)",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/lots/BUILDING-A/check-out",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "lots",
+                                                                               "BUILDING-A",
+                                                                               "check-out"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"licensePlate\":\"MOTO-001\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Check-Out Motorcycle (MOTO-001) - Base Fee",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/lots/BUILDING-B/check-out",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "lots",
+                                                                               "BUILDING-B",
+                                                                               "check-out"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"licensePlate\":\"TRK-2025\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Check-Out Truck (TRK-2025) - Base Fee",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/lots/2/check-in",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "lots",
+                                                                               "2",
+                                                                               "check-in"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"licensePlate\":\"ABC-1234\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Check-In Without Available Slots (Should Fail)",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/lots/BUILDING-A/check-out",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "lots",
+                                                                               "BUILDING-A",
+                                                                               "check-out"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"licensePlate\":\"INVALID-LICENSE\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Check-Out Invalid Session ID (Should Fail)",
+                                      "response":  [
+
+                                                   ]
+                                  }
+                              ]
+                 },
+                 {
+                     "description":  "Missing authentication, malformed requests, and boundary conditions",
+                     "name":  "5. Error \u0026 Edge Cases",
+                     "item":  [
+                                  {
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/vehicles",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicles"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+
+                                                                 ]
+                                                  },
+                                      "name":  "Get Vehicles Without Token (Should Fail)",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/lots",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "lots"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+
+                                                                 ]
+                                                  },
+                                      "name":  "Get Lots Without Token (Should Fail)",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/vehicles",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicles"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"licensePlate\":\"\",\"type\":\"CAR\",\"ownerName\":\"Test User\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Register Vehicle - Empty Plate Number (Should Fail)",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/lots",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "lots"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\"capacity\":\"-10\",\"location\":\"Building X Location\",\"lotId\":\"BUILDING-X\"}",
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Create Parking Lot - Negative Slots (Should Fail)",
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "http://localhost:8080/api/vehicles/INVALID-LICENSE",
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicles",
+                                                                               "INVALID-LICENSE"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{token}}"
+                                                                     }
+                                                                 ]
+                                                  },
+                                      "name":  "Get Non-Existent Vehicle (Should Fail)",
+                                      "response":  [
+
+                                                   ]
+                                  }
+                              ]
+                 }
+             ],
+    "auth":  {
+                 "bearer":  [
+                                {
+                                    "key":  "token",
+                                    "type":  "string",
+                                    "value":  "{{token}}"
+                                }
+                            ],
+                 "type":  "bearer"
+             }
+}
